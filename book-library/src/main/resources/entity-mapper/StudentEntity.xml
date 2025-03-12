@@ -31,6 +31,14 @@
         SELECT * FROM students WHERE active = true
     </select>
 
+    <!-- Find all students by id in-->
+    <select id="findAllByIdIn" resultMap="StudentEntityResultMap">
+        SELECT * FROM students WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
     <!-- Insert a new student -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO students (first_name, last_name, email, enrollment_number, enrollment_date, phone_number, active)

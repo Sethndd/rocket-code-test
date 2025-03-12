@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BooksService } from '../../services/books.service';
-import { Book } from '../../entities/book.entitite';
+import { Book } from '../../entities/book.model';
+import { BookHistory } from '../../entities/book-history.model';
 
 @Component({
   selector: 'app-books',
@@ -16,17 +17,64 @@ import { Book } from '../../entities/book.entitite';
   styleUrl: './books.component.css'
 })
 export class BooksComponent implements OnInit {
-  books: Book[] = []; // Will be populated with data from the API
-  currentPage: number = 1;
-  itemsPerPage: number = 5;
-  totalItems: number = 0;
-  selectedBook: any;
-  showModal = false;
+  selectedBook: Book | null = null;
+  showDetailsModal = false;
+  showHistoryModal = false;
 
-  constructor(private readonly booksService: BooksService) {}
+  bookHistory: BookHistory[] = [];
+  currentHistoryPage: number;
+  historyItemsPerPage: number;
+  totalHistoryItems: number;
+
+  books: Book[] = [];
+  currentPage: number;
+  itemsPerPage: number;
+  totalItems: number;
+
+  constructor(private readonly booksService: BooksService) {
+    this.currentPage = 1;
+    this.itemsPerPage = 5;
+    this.totalItems = 0;
+
+    this.currentHistoryPage = 1;
+    this.historyItemsPerPage = 5;
+    this.totalHistoryItems = 0;
+  }
 
   ngOnInit() {
     this.loadBooks();
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
+    this.loadBooks();
+  }
+
+  changeHistoryPage(page: number) {
+    this.currentHistoryPage = page;
+    setTimeout(() => this.loadBookHistory(this.selectedBook!.id), 0);
+  }
+
+  openDetailsModal(book: Book) {
+    this.selectedBook = book;
+    this.showDetailsModal = true;
+  }
+
+  closeDetailsModal() {
+    this.selectedBook = null;
+    this.showDetailsModal = false;
+  }
+
+  openHistoryModal(book: Book) {
+    this.bookHistory = [];
+    setTimeout(() => this.loadBookHistory(book.id), 0);
+    this.selectedBook = book;
+    this.showHistoryModal = true;
+  }
+
+  closeHistoryModal() {
+    this.selectedBook = null;
+    this.showHistoryModal = false;
   }
 
   loadBooks() {
@@ -39,24 +87,19 @@ export class BooksComponent implements OnInit {
       error: (error) => {
         console.error('Error loading books:', error);
       },
-      complete: () => {
-        console.log('Books data loading complete');
-      }
     });
   }
 
-  changePage(page: number) {
-    this.currentPage = page;
-    this.loadBooks();
+  loadBookHistory(id: number) {
+    this.booksService.getHistory(id).subscribe({
+      next: (data) => {
+        this.bookHistory = data.content;
+        this.totalHistoryItems = data.totalElements;
+      },
+      error: (error) => {
+        console.error('Error loading book history:', error);
+      },
+    });
   }
 
-  openModal(book: any) {
-    this.selectedBook = book;
-    this.showModal = true;
-  }
-
-  closeModal() {
-    this.selectedBook = null;
-    this.showModal = false;
-  }
 }

@@ -14,6 +14,16 @@
         <result property="returnDate" column="return_date"/>
     </resultMap>
 
+    <resultMap id="LoansToStudent" type="org.example.database.entity.LoansToStudent">
+        <result property="loanId" column="loan_id"/>
+        <result property="bookId" column="book_id"/>
+        <result property="studentId" column="student_id"/>
+        <result property="studentName" column="student_name"/>
+        <result property="loanDate" column="loan_date"/>
+        <result property="dueDate" column="due_date"/>
+        <result property="returnDate" column="return_date"/>
+    </resultMap>
+
     <!-- Find a loan by its ID -->
     <select id="findById" resultMap="LoanEntityResultMap">
         SELECT * FROM loans WHERE id = #{id}
@@ -30,8 +40,24 @@
     </select>
 
     <!-- Find loans by bookId -->
-    <select id="findByBookId" resultMap="LoanEntityResultMap">
-        SELECT * FROM loans WHERE book_id = #{bookId}
+    <select id="findByBookId" resultMap="LoansToStudent">
+        SELECT
+            l.id as loan_id,
+            l.book_id,
+            l.student_id,
+            CONCAT (s.first_name, ' ', s.last_name) as student_name,
+            l.loan_date,
+            l.due_date,
+            l.return_date
+        FROM loans l
+        LEFT JOIN students s ON l.student_id = s.id
+        WHERE book_id = #{bookId}
+        ORDER BY l.id LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <!-- count loans by bookId -->
+    <select id="count" resultType="long">
+        SELECT COUNT(l.id) FROM loans l WHERE book_id = #{bookId}
     </select>
 
     <!-- Insert a new loan -->

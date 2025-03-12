@@ -27,6 +27,7 @@ INSERT INTO Students (first_name, last_name, email, enrollment_number, phone_num
 -- Insertando préstamos en Loans
 INSERT INTO Loans (book_id, student_id, loan_date, due_date, return_date) VALUES
 (1, 1, '2025-03-01', '2025-03-15', NULL),
+(1, 2, '2025-03-01', '2025-03-15', NULL),
 (2, 2, '2025-02-20', '2025-03-05', '2025-03-02'),
 (3, 3, '2025-02-25', '2025-03-10', NULL),
 (4, 4, '2025-03-02', '2025-03-16', NULL);

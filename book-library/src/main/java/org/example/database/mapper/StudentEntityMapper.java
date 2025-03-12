@@ -11,4 +11,5 @@ public interface StudentEntityMapper {
     void insert(StudentEntity studentEntity);
     void update(StudentEntity studentEntity);
     void delete(Long id);
+    List<StudentEntity> findAllByIdIn(List<Long> ids);
 }

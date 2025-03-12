@@ -11,6 +11,7 @@
         <result property="publisher" column="publisher"/>
         <result property="publicationYear" column="publication_year"/>
         <result property="active" column="active"/>
+        <result property="description" column="description"/>
     </resultMap>
 
     <!-- Find a book by its ID -->
