@@ -12,7 +12,7 @@ INSERT INTO Inventory (book_id, quantity) VALUES
 (4, 2);
 
 -- Insertando estudiantes en Students
-INSERT INTO Students (first_name, last_name, email, enrollment_number, phone) VALUES
+INSERT INTO Students (first_name, last_name, email, enrollment_number, phone_number) VALUES
 ('Alice', 'Johnson', 'alice.johnson@example.com', 'ENR001', '555-1234'),
 ('Bob', 'Smith', 'bob.smith@example.com', 'ENR002', '555-5678'),
 ('Charlie', 'Brown', 'charlie.brown@example.com', 'ENR003', '555-9101'),
