@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS Books (
     author VARCHAR(255) NOT NULL,
     publisher VARCHAR(255),
     publication_year INT,
-    isbn VARCHAR(20) UNIQUE,
     description TEXT,
     active BOOLEAN DEFAULT TRUE
 );

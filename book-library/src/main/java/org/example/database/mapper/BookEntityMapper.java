@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface BookEntityMapper {
     BookEntity findById(Long id);
-    List<BookEntity> findAll();
+    List<BookEntity> findAll(Long size, Long offset);
+    long count();
     void insert(BookEntity bookEntity);
     void update(BookEntity bookEntity);
     void delete(Long id);

@@ -8,17 +8,19 @@
         <table class="table table-striped">
           <thead>
           <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Year</th>
-            <th>Action</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Publicador</th>
+            <th>Fecha de publicación</th>
+            <th></th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let book of books | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+          <tr *ngFor="let book of books | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems}">
             <td>{{ book.title }}</td>
             <td>{{ book.author }}</td>
-            <td>{{ book.year }}</td>
+            <td>{{ book.publisher }}</td>
+            <td>{{ book.publicationYear }}</td>
             <td>
               <button class="btn btn-info" (click)="openModal(book)">Details</button>
             </td>

@@ -3,22 +3,35 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.example.database.mapper.BookEntityMapper">
+    <!-- ResultMap to map database columns to BookEntity properties -->
+    <resultMap id="BookEntityResultMap" type="org.example.database.entity.BookEntity">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="author" column="author"/>
+        <result property="publisher" column="publisher"/>
+        <result property="publicationYear" column="publication_year"/>
+        <result property="active" column="active"/>
+    </resultMap>
 
     <!-- Find a book by its ID -->
-    <select id="findById" resultType="org.example.database.entity.BookEntity">
+    <select id="findById" resultMap="BookEntityResultMap">
         SELECT * FROM books WHERE id = #{id}
     </select>
 
     <!-- Get all books -->
-    <select id="findAll" resultType="org.example.database.entity.BookEntity">
-        SELECT * FROM books
+    <select id="findAll" resultMap="BookEntityResultMap">
+        SELECT * FROM books ORDER BY id LIMIT #{size} OFFSET #{offset}
     </select>
 
     <!-- Insert a new book -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO books (title, author, publisher, publication_year, isbn)
-        VALUES (#{title}, #{author}, #{publisher}, #{publicationYear}, #{isbn})
+        INSERT INTO books (title, author, publisher, publication_year)
+        VALUES (#{title}, #{author}, #{publisher}, #{publicationYear})
     </insert>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM books
+    </select>
 
     <!-- Update an existing book -->
     <update id="update">
@@ -27,7 +40,6 @@
             publication_year = #{publicationYear},
             author = #{author},
             publisher = #{publisher},
-            isbn = #{isbn}
         WHERE id = #{id}
     </update>
 

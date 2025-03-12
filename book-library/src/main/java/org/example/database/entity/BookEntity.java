@@ -12,7 +12,6 @@ public class BookEntity {
     private String title;
     private String author;
     private String publisher;
-    private String publicationYear;
-    private String isbn;
+    private Long publicationYear;
     private Boolean active;
 }

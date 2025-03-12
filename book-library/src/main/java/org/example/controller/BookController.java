@@ -3,6 +3,7 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.database.entity.BookEntity;
 import org.example.database.entity.LoanEntity;
+import org.example.database.entity.Page;
 import org.example.service.BookService;
 import org.example.service.LoanService;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,11 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookEntity> findAll() {
-        return bookService.findAll();
+    public Page<BookEntity> findAll(
+            @RequestParam(defaultValue = "1") Long page,
+            @RequestParam(defaultValue = "5") Long size
+    ) {
+        return bookService.findAll(size, page);
     }
 
     @PostMapping

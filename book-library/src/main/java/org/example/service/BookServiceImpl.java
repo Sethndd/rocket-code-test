@@ -2,6 +2,7 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.database.entity.BookEntity;
+import org.example.database.entity.Page;
 import org.example.database.mapper.BookEntityMapper;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -16,8 +17,11 @@ public class BookServiceImpl implements BookService {
         return bookEntityMapper.findById(id);
     }
 
-    public List<BookEntity> findAll() {
-        return bookEntityMapper.findAll();
+    public Page<BookEntity> findAll(Long size, Long page) {
+        Long offset = size * (page - 1);
+        List<BookEntity> entities = bookEntityMapper.findAll(size, offset);
+        Long total = bookEntityMapper.count();
+        return new Page<>(entities, page, size, total);
     }
 
     @Override
