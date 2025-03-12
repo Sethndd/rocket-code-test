@@ -1,0 +1,13 @@
+/* Optional styles for table pagination */
+.pagination {
+  justify-content: center;
+}
+
+.page-item.disabled .page-link {
+  pointer-events: none;
+}
+
+.page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+}

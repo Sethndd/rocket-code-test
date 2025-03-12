@@ -1,1 +1,55 @@
-<p>books works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 card text-center">
+      <div class="card-header">
+        <h3>Gestión de libros</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let book of books | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.year }}</td>
+            <td>
+              <button class="btn btn-info" (click)="openModal(book)">Details</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal mt-5 " id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true"
+       [ngClass]="{'show': showModal}" style="display: block;" *ngIf="showModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bookModalLabel">{{ selectedBook?.title }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                  (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Author:</strong> {{ selectedBook?.author }}</p>
+          <p><strong>Year:</strong> {{ selectedBook?.year }}</p>
+          <p><strong>Description:</strong> {{ selectedBook?.description }}</p>
+          <!-- Add a description or any other field you need -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
