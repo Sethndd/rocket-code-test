@@ -1,54 +1,54 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.database.entity.BookEntity;
 import org.example.database.entity.LoanEntity;
-import org.example.service.BookService;
+import org.example.database.entity.StudentEntity;
 import org.example.service.LoanService;
+import org.example.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController()
-@RequestMapping("/books")
+@RequestMapping("/students")
 @RequiredArgsConstructor
-public class BookController {
-    private final BookService bookService;
-    private final LoanService loanService;
+public class StudentController {
+    private final StudentService student;
+    private final LoanService loan;
 
     @GetMapping("/{id}")
-    public BookEntity findById(
+    public StudentEntity findById(
             @PathVariable Long id
     ) {
-        return bookService.findById(id);
+        return student.findById(id);
     }
 
     @GetMapping
-    public List<BookEntity> findAll() {
-        return bookService.findAll();
+    public List<StudentEntity> findAll() {
+        return student.findAll();
     }
 
     @PostMapping
-    public void insert(BookEntity bookEntity) {
-        bookService.insert(bookEntity);
+    public void insert(StudentEntity studentEntity) {
+        student.insert(studentEntity);
     }
 
     @PutMapping
-    public void update(BookEntity bookEntity) {
-        bookService.update(bookEntity);
+    public void update(StudentEntity studentEntity) {
+        student.update(studentEntity);
     }
 
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id
     ) {
-        bookService.delete(id);
+        student.delete(id);
     }
 
     @GetMapping("/{id}/loans")
     public List<LoanEntity> findLoanedBooks(
             @PathVariable Long id
     ) {
-        return loanService.findByBookId(id);
+        return loan.findByStudentId(id);
     }
 }

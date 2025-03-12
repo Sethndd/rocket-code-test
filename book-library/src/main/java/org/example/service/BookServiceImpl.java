@@ -9,9 +9,29 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
-    private final BookEntityMapper bookMapper;
+    private final BookEntityMapper bookEntityMapper;
 
-    public List<BookEntity> getAllBooks() {
-        return bookMapper.findAll();
+    @Override
+    public BookEntity findById(Long id) {
+        return bookEntityMapper.findById(id);
+    }
+
+    public List<BookEntity> findAll() {
+        return bookEntityMapper.findAll();
+    }
+
+    @Override
+    public void insert(BookEntity bookEntity) {
+        bookEntityMapper.insert(bookEntity);
+    }
+
+    @Override
+    public void update(BookEntity bookEntity) {
+        bookEntityMapper.update(bookEntity);
+    }
+
+    @Override
+    public void delete(Long id) {
+        bookEntityMapper.delete(id);
     }
 }
