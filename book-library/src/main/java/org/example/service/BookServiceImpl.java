@@ -12,6 +12,6 @@ public class BookServiceImpl implements BookService {
     private final BookEntityMapper bookMapper;
 
     public List<BookEntity> getAllBooks() {
-        return bookMapper.findAllBooks();
+        return bookMapper.findAll();
     }
 }

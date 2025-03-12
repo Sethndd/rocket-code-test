@@ -3,7 +3,39 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.example.database.mapper.BookEntityMapper">
-    <select id="findAllBooks" resultType="BookEntity">
+
+    <!-- Find a book by its ID -->
+    <select id="findById" resultType="org.example.database.entity.BookEntity">
+        SELECT * FROM books WHERE id = #{id}
+    </select>
+
+    <!-- Get all books -->
+    <select id="findAll" resultType="org.example.database.entity.BookEntity">
         SELECT * FROM books
     </select>
+
+    <!-- Insert a new book -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO books (title, author, publisher, publication_year, isbn)
+        VALUES (#{title}, #{author}, #{publisher}, #{publicationYear}, #{isbn})
+    </insert>
+
+    <!-- Update an existing book -->
+    <update id="update">
+        UPDATE books SET
+            title = #{title},
+            publication_year = #{publicationYear},
+            author = #{author},
+            publisher = #{publisher},
+            isbn = #{isbn}
+        WHERE id = #{id}
+    </update>
+
+    <!-- Soft delete a book by setting 'is_deleted' to TRUE -->
+    <update id="delete">
+        UPDATE books
+        SET active = FALSE
+        WHERE id = #{id}
+    </update>
+
 </mapper>
