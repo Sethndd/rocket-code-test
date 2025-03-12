@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.database.mapper.StudentEntityMapper">
+
+     <!-- ResultMap to map database columns to StudentEntity properties -->
+    <resultMap id="StudentEntityResultMap" type="org.example.database.entity.StudentEntity">
+        <id property="id" column="id" />
+        <result property="firstName" column="first_name" />
+        <result property="lastName" column="last_name" />
+        <result property="email" column="email" />
+        <result property="enrollmentNumber" column="enrollment_number" />
+        <result property="enrollmentDate" column="enrollment_date" />
+        <result property="phoneNumber" column="phone_number" />
+        <result property="active" column="active" />
+    </resultMap>
+
+    <!-- Find student by id (only active ones) -->
+    <select id="findById" resultMap="StudentEntityResultMap">
+        SELECT * FROM students WHERE id = #{id} AND active = true
+    </select>
+
+    <!-- Find student by email (only active ones) -->
+    <select id="findByEmail" resultMap="StudentEntityResultMap">
+        SELECT * FROM students WHERE email = #{email} AND active = true
+    </select>
+
+    <!-- Find all active students -->
+    <select id="findAll" resultMap="StudentEntityResultMap">
+        SELECT * FROM students WHERE active = true
+    </select>
+
+    <!-- Insert a new student -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO students (first_name, last_name, email, enrollment_number, enrollment_date, phone_number, active)
+        VALUES (#{firstName}, #{lastName}, #{email}, #{enrollmentNumber}, #{enrollmentDate}, #{phoneNumber}, #{active})
+    </insert>
+
+ <!-- Update an existing student -->
+    <update id="update">
+        UPDATE students
+        SET first_name = #{firstName},
+            last_name = #{lastName},
+            email = #{email},
+            enrollment_number = #{enrollmentNumber},
+            enrollment_date = #{enrollmentDate},
+            phone_number = #{phoneNumber},
+            active = #{active}
+        WHERE id = #{id}
+    </update>
+
+    <!-- Soft delete a student (set active to false) -->
+    <update id="delete">
+        UPDATE students SET active = false WHERE id = #{id}
+    </update>
+
+</mapper>

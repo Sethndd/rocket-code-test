@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.database.mapper.InventoryEntityMapper">
+
+    <!-- Find an inventory item by its ID -->
+    <select id="findById" resultType="org.example.database.entity.InventoryEntity">
+        SELECT * FROM inventory WHERE id = #{id}
+    </select>
+
+    <!-- Find all inventory items -->
+    <select id="findAll" resultType="org.example.database.entity.InventoryEntity">
+        SELECT * FROM inventory
+    </select>
+
+    <!-- Insert a new inventory item -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO inventory (product_id, quantity, price)
+        VALUES (#{productId}, #{quantity}, #{price})
+    </insert>
+
+    <!-- Update an existing inventory item -->
+    <update id="update">
+        UPDATE inventory SET
+            product_id = #{productId},
+            quantity = #{quantity},
+            price = #{price}
+        WHERE id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.database.mapper.LoanEntityMapper">
+
+    <!-- ResultMap to map database columns to LoanEntity properties -->
+    <resultMap id="LoanEntityResultMap" type="org.example.database.entity.LoanEntity">
+        <id property="id" column="id"/>
+        <result property="bookId" column="book_id"/>
+        <result property="studentId" column="student_id"/>
+        <result property="loanDate" column="loan_date"/>
+        <result property="dueDate" column="due_date"/>
+        <result property="returnDate" column="return_date"/>
+    </resultMap>
+
+    <!-- Find a loan by its ID -->
+    <select id="findById" resultMap="LoanEntityResultMap">
+        SELECT * FROM loans WHERE id = #{id}
+    </select>
+
+    <!-- Find all loans -->
+    <select id="findAll" resultMap="LoanEntityResultMap">
+        SELECT * FROM loans
+    </select>
+
+    <!-- Find loans by studentId -->
+    <select id="findByStudentId" resultMap="LoanEntityResultMap">
+        SELECT * FROM loans WHERE student_id = #{studentId}
+    </select>
+
+    <!-- Find loans by bookId -->
+    <select id="findByBookId" resultMap="LoanEntityResultMap">
+        SELECT * FROM loans WHERE book_id = #{bookId}
+    </select>
+
+    <!-- Insert a new loan -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO loans (book_id, student_id, loan_date, due_date, return_date)
+        VALUES (#{bookId}, #{studentId}, #{loanDate}, #{dueDate}, #{returnDate})
+    </insert>
+
+    <!-- Update an existing loan -->
+    <update id="update">
+        UPDATE loans
+        SET book_id = #{bookId},
+            student_id = #{studentId},
+            loan_date = #{loanDate},
+            due_date = #{dueDate},
+            return_date = #{returnDate}
+        WHERE id = #{id}
+    </update>
+
+</mapper>
