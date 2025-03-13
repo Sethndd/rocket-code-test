@@ -1,17 +1,14 @@
 package org.example.service;
 
 import lombok.AllArgsConstructor;
-import org.example.database.entity.LoansToStudent;
+import org.example.database.entity.LoansToBook;
 import org.example.database.entity.LoanEntity;
+import org.example.database.entity.LoansToStudent;
 import org.example.database.entity.Page;
-import org.example.database.entity.StudentEntity;
-import org.example.database.mapper.BookEntityMapper;
 import org.example.database.mapper.LoanEntityMapper;
-import org.example.database.mapper.StudentEntityMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -29,15 +26,19 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanEntity> findByStudentId(Long studentId) {
-        return loanEntityMapper.findByStudentId(studentId);
+    public Page<LoansToStudent> findByStudentId(Long bookId, Long size, Long page) {
+        Long offset = size * (page - 1);
+        List<LoansToStudent> list = loanEntityMapper.findByStudentId(bookId, size, offset);
+        Long totalElements = loanEntityMapper.countByBook();
+
+        return new Page<>(list, page, size, totalElements);
     }
 
     @Override
-    public Page<LoansToStudent> findByBookId(Long bookId, Long size, Long page) {
+    public Page<LoansToBook> findByBookId(Long bookId, Long size, Long page) {
         Long offset = size * (page - 1);
-        List<LoansToStudent> list = loanEntityMapper.findByBookId(bookId, size, offset);
-        Long totalElements = loanEntityMapper.count();
+        List<LoansToBook> list = loanEntityMapper.findByBookId(bookId, size, offset);
+        Long totalElements = loanEntityMapper.countByBook();
 
         return new Page<>(list, page, size, totalElements);
     }

@@ -1,6 +1,7 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.database.entity.Page;
 import org.example.database.entity.StudentEntity;
 import org.example.database.mapper.StudentEntityMapper;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentEntity> findAll() {
-        return studentEntityMapper.findAll();
+    public Page<StudentEntity> findAll(Long size, Long page) {
+        Long offset = size * (page - 1);
+        List<StudentEntity> entities = studentEntityMapper.findAll(size, offset);
+        Long total = studentEntityMapper.count();
+        return new Page<>(entities, page, size, total);
     }
 
     @Override

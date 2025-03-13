@@ -14,11 +14,21 @@
         <result property="returnDate" column="return_date"/>
     </resultMap>
 
-    <resultMap id="LoansToStudent" type="org.example.database.entity.LoansToStudent">
+    <resultMap id="LoansToBook" type="org.example.database.entity.LoansToBook">
         <result property="loanId" column="loan_id"/>
         <result property="bookId" column="book_id"/>
         <result property="studentId" column="student_id"/>
         <result property="studentName" column="student_name"/>
+        <result property="loanDate" column="loan_date"/>
+        <result property="dueDate" column="due_date"/>
+        <result property="returnDate" column="return_date"/>
+    </resultMap>
+    
+    <resultMap id="LoansToStudent" type="org.example.database.entity.LoansToStudent">
+        <result property="loanId" column="loan_id"/>
+        <result property="bookId" column="book_id"/>
+        <result property="studentId" column="student_id"/>
+        <result property="title" column="title"/>
         <result property="loanDate" column="loan_date"/>
         <result property="dueDate" column="due_date"/>
         <result property="returnDate" column="return_date"/>
@@ -35,12 +45,23 @@
     </select>
 
     <!-- Find loans by studentId -->
-    <select id="findByStudentId" resultMap="LoanEntityResultMap">
-        SELECT * FROM loans WHERE student_id = #{studentId}
+    <select id="findByStudentId" resultMap="LoansToStudent">
+        SELECT
+            l.id as loan_id,
+            l.book_id,
+            l.student_id,
+            b.title,
+            l.loan_date,
+            l.due_date,
+            l.return_date
+        FROM loans l
+        LEFT JOIN books b ON l.student_id = b.id
+        WHERE student_id = #{studentId}
+        ORDER BY l.id LIMIT #{size} OFFSET #{offset}
     </select>
 
     <!-- Find loans by bookId -->
-    <select id="findByBookId" resultMap="LoansToStudent">
+    <select id="findByBookId" resultMap="LoansToBook">
         SELECT
             l.id as loan_id,
             l.book_id,
@@ -55,8 +76,13 @@
         ORDER BY l.id LIMIT #{size} OFFSET #{offset}
     </select>
 
+    <!-- count loans by studentId -->
+    <select id="countByStudent" resultType="long">
+        SELECT COUNT(l.id) FROM loans l WHERE student_id = #{studentId}
+    </select>
+
     <!-- count loans by bookId -->
-    <select id="count" resultType="long">
+    <select id="countByBook" resultType="long">
         SELECT COUNT(l.id) FROM loans l WHERE book_id = #{bookId}
     </select>
 

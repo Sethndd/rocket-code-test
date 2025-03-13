@@ -1,13 +1,13 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.database.entity.LoanEntity;
+import org.example.database.entity.LoansToBook;
+import org.example.database.entity.LoansToStudent;
+import org.example.database.entity.Page;
 import org.example.database.entity.StudentEntity;
 import org.example.service.LoanService;
 import org.example.service.StudentService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController()
 @RequestMapping("/students")
@@ -24,8 +24,11 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<StudentEntity> findAll() {
-        return student.findAll();
+    public Page<StudentEntity> findAll(
+            @RequestParam(defaultValue = "1") Long page,
+            @RequestParam(defaultValue = "5") Long size
+    ) {
+        return student.findAll(size, page);
     }
 
     @PostMapping
@@ -50,9 +53,11 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/loans")
-    public List<LoanEntity> findLoanedBooks(
-            @PathVariable Long id
+    public Page<LoansToStudent> findLoanedBooks(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "1") Long page,
+            @RequestParam(defaultValue = "5") Long size
     ) {
-        return loan.findByStudentId(id);
+        return loan.findByStudentId(id, size, page);
     }
 }

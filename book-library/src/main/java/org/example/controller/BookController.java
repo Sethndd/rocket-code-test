@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.database.entity.LoansToStudent;
+import org.example.database.entity.LoansToBook;
 import org.example.database.entity.BookEntity;
 import org.example.database.entity.Page;
 import org.example.service.BookService;
@@ -52,7 +52,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}/loans")
-    public Page<LoansToStudent> findLoanedBooks(
+    public Page<LoansToBook> findLoanedBooks(
             @PathVariable Long id,
             @RequestParam(defaultValue = "1") Long page,
             @RequestParam(defaultValue = "5") Long size

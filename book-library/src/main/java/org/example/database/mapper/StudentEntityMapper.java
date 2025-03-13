@@ -7,7 +7,8 @@ import java.util.List;
 public interface StudentEntityMapper {
     StudentEntity findById(Long id);
     StudentEntity findByEmail(String email);
-    List<StudentEntity> findAll();
+    List<StudentEntity> findAll(Long size, Long offset);
+    Long count();
     void insert(StudentEntity studentEntity);
     void update(StudentEntity studentEntity);
     void delete(Long id);

@@ -28,7 +28,15 @@
 
     <!-- Find all active students -->
     <select id="findAll" resultMap="StudentEntityResultMap">
-        SELECT * FROM students WHERE active = true
+        SELECT * FROM students
+        WHERE active = true
+        ORDER BY id
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <!-- Count all active students -->
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM students WHERE active = true
     </select>
 
     <!-- Find all students by id in-->

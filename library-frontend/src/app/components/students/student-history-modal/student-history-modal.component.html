@@ -1,0 +1,39 @@
+  <div class="modal mt-5" id="historyModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true" [ngClass]="{'show': 'true'}" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bookhistoryModalLabel">{{ selectedStudent?.firstName }} {{ selectedStudent?.lastName }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                  (click)="closeHistoryModal()"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-sm table-striped table-bordered">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Fecha de prestamo</th>
+              <th>Fecha de devolución</th>
+              <th>Fecha de retorno</th>
+              <th>Estado</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+              *ngFor="let history of studentHistory | paginate: { itemsPerPage: historyItemsPerPage, currentPage: currentHistoryPage, totalItems: historyItemsPerPage, id: 'innertable'}">
+              <td>{{ history.title  || '' }}</td>
+              <td>{{ (history.loanDate | date:'dd/MM/yyyy')  || ''}}</td>
+              <td>{{ (history.loanDate | date:'dd/MM/yyyy')  || ''}}</td>
+              <td>{{ (history.loanDate | date:'dd/MM/yyyy')  || ''}}</td>
+              <td> {{ history.status  || ''}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <pagination-controls id="innertable" (pageChange)="changeHistoryPage($event)"></pagination-controls>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeHistoryModal()">Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,22 @@
+<div class="modal mt-5" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true"
+     [ngClass]="{'show': true}" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="studentModalLabel">{{ selectedStudent?.firstName }} {{ selectedStudent?.lastName }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="closeDetailsModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Email:</strong> {{ selectedStudent?.email }}</p>
+        <p><strong>Número de Matrícula:</strong> {{ selectedStudent?.enrollmentNumber }}</p>
+        <p><strong>Fecha de Inscripción:</strong> {{ selectedStudent?.enrollmentDate | date:'dd/MM/yyyy' }}</p>
+        <p><strong>Teléfono:</strong> {{ selectedStudent?.phoneNumber }}</p>
+        <p><strong>Estado:</strong> {{ selectedStudent?.active ? 'Activo' : 'Inactivo' }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeDetailsModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

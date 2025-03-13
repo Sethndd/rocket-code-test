@@ -9,11 +9,11 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoansToStudent {
+public class LoansToBook {
     private Long loanId;
     private Long bookId;
     private Long studentId;
-    private String title;
+    private String studentName;
     private Date loanDate;
     private Date dueDate;
     private Date returnDate;
