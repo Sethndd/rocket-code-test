@@ -18,6 +18,10 @@ export class BooksService {
     return this.http.get<Paginated<Book>>(`${this.apiUrl}/books?page=${page}&size=${size}`);
   }
 
+  getListBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.apiUrl}/books/all`);
+  }
+
   getHistory(id: number): Observable<Paginated<BookHistory>> {
     return this.http.get<Paginated<BookHistory>>(`${this.apiUrl}/books/${id}/loans`);
   }

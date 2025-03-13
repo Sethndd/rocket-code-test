@@ -8,6 +8,8 @@ import org.example.service.BookService;
 import org.example.service.LoanService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController()
 @RequestMapping("/books")
 @RequiredArgsConstructor
@@ -28,6 +30,11 @@ public class BookController {
             @RequestParam(defaultValue = "5") Long size
     ) {
         return bookService.findAll(size, page);
+    }
+
+    @GetMapping("/all")
+    public List<BookEntity> findAll() {
+        return bookService.findAllNotPaged();
     }
 
     @PostMapping

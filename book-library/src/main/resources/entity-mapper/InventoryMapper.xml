@@ -3,6 +3,29 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.example.database.mapper.InventoryEntityMapper">
+    <resultMap id="bookStatus" type="org.example.database.entity.BookStatus">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="author" column="author"/>
+        <result property="bookId" column="book_id"/>
+        <result property="total" column="total"/>
+        <result property="available" column="available"/>
+        <result property="borrowed" column="borrowed"/>
+        <result property="overdue" column="overdue"/>
+    </resultMap>
+
+    <!-- Get book status -->
+    <select id="findBookStatus" resultMap="bookStatus">
+        SELECT
+            i.id,
+            b.id as book_id,
+            b.title,
+            b.author,
+            i.quantity as total,
+        FROM books b
+        LEFT JOIN inventory i ON b.id = i.book_id
+        WHERE b.id = #{id}
+    </select>
 
     <!-- Find an inventory item by its ID -->
     <select id="findById" resultType="org.example.database.entity.InventoryEntity">

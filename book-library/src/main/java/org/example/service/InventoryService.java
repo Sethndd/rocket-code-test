@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.database.entity.BookStatus;
 import org.example.database.entity.InventoryEntity;
 
 import java.util.List;
@@ -9,4 +10,5 @@ public interface InventoryService {
     List<InventoryEntity> findAll();
     void insert(InventoryEntity inventoryEntity);
     void update(InventoryEntity inventoryEntity);
+    BookStatus findByBookId(Long bookId);
 }

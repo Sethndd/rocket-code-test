@@ -7,6 +7,7 @@ import org.example.database.mapper.StudentEntityMapper;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -30,6 +31,11 @@ public class StudentServiceImpl implements StudentService {
         List<StudentEntity> entities = studentEntityMapper.findAll(size, offset);
         Long total = studentEntityMapper.count();
         return new Page<>(entities, page, size, total);
+    }
+
+    @Override
+    public List<StudentEntity> findAllNotPaged() {
+        return studentEntityMapper.findAllNotPaged();
     }
 
     @Override

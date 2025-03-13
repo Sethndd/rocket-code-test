@@ -5,6 +5,8 @@ import org.example.database.entity.BookEntity;
 import org.example.database.entity.Page;
 import org.example.database.mapper.BookEntityMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -25,14 +27,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookEntity> findAllNotPaged() {
+        return bookEntityMapper.findAllNotPaged();
+    }
+
+    @Override
     public void insert(BookEntity bookEntity) {
-        System.out.println("bookEntity = " + bookEntity);
         bookEntityMapper.insert(bookEntity);
     }
 
     @Override
     public void update(BookEntity bookEntity) {
-        System.out.println("bookEntity = " + bookEntity);
         bookEntityMapper.update(bookEntity);
     }
 

@@ -24,12 +24,18 @@
         SELECT * FROM books ORDER BY id LIMIT #{size} OFFSET #{offset}
     </select>
 
+    <!-- Get all books not paginated-->
+    <select id="findAllNotPaged" resultMap="BookEntityResultMap">
+        SELECT * FROM books ORDER BY id
+    </select>
+
     <!-- Insert a new book -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO books (title, author, publisher, publication_year, description)
         VALUES (#{title}, #{author}, #{publisher}, #{publicationYear}, #{description})
     </insert>
 
+    <!-- count books -->
     <select id="count" resultType="long">
         SELECT COUNT(*) FROM books
     </select>

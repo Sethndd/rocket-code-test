@@ -1,1 +1,48 @@
-<p>loans works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 card text-center">
+      <div class="card-header">
+        <h3>Gestión de Préstamos</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
+              <th>Nombre</th>
+              <th>Estudiante</th>
+              <th>Fecha de prestamo</th>
+              <th>Fecha de devolución</th>
+              <th>Fecha de retorno</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr
+              *ngFor="let loan of loans | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems, id: 'maintable'}">
+              <td>{{ loan.title  || '' }}</td>
+              <td>{{ loan.studentName  || '' }}</td>
+              <td>{{ (loan.loanDate | date:'dd/MM/yyyy')  || ''}}</td>
+              <td>{{ (loan.loanDate | date:'dd/MM/yyyy')  || ''}}</td>
+              <td>{{ (loan.loanDate | date:'dd/MM/yyyy')  || ''}}</td>
+              <td> {{ loan.status  || ''}}</td>
+              <td> <button class="btn btn-info" (click)="setDue(loan)" *ngIf="loan.status === 'Prestado'">Entregar</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row mt-3">
+          <button class="btn btn-primary col-3" (click)="openAddModal()">
+            Prestar Libro
+          </button>
+          <div class="col-4"></div>
+          <pagination-controls id="maintable" (pageChange)="changePage($event)" class="col-5"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- add Modal -->
+  <app-create-loan
+    (onClose)="closeAddModal()"
+    *ngIf="showAddModal"
+  ></app-create-loan>
+</div>

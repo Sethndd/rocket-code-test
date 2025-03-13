@@ -1,13 +1,14 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.database.entity.LoansToBook;
 import org.example.database.entity.LoansToStudent;
 import org.example.database.entity.Page;
 import org.example.database.entity.StudentEntity;
 import org.example.service.LoanService;
 import org.example.service.StudentService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController()
 @RequestMapping("/students")
@@ -29,6 +30,11 @@ public class StudentController {
             @RequestParam(defaultValue = "5") Long size
     ) {
         return student.findAll(size, page);
+    }
+
+    @GetMapping("/all")
+    public List<StudentEntity> findAll() {
+        return student.findAllNotPaged();
     }
 
     @PostMapping

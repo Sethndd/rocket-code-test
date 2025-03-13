@@ -18,6 +18,10 @@ export class StudentsService {
     return this.http.get<Paginated<Student>>(`${this.apiUrl}/students?page=${page}&size=${size}`);
   }
 
+  getListStudents(): Observable<Student[]> {
+    return this.http.get<Student[]>(`${this.apiUrl}/students/all`);
+  }
+
   getHistory(id: number): Observable<Paginated<StudentHistory>> {
     return this.http.get<Paginated<StudentHistory>>(`${this.apiUrl}/students/${id}/loans`);
   }

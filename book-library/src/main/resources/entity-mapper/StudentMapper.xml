@@ -26,12 +26,19 @@
         SELECT * FROM students WHERE email = #{email} AND active = true
     </select>
 
-    <!-- Find all active students -->
+    <!-- Find all active students paginated -->
     <select id="findAll" resultMap="StudentEntityResultMap">
         SELECT * FROM students
         WHERE active = true
         ORDER BY id
         LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <!-- Find all active students -->
+    <select id="findAllNotPaged" resultMap="StudentEntityResultMap">
+        SELECT * FROM students
+        WHERE active = true
+        ORDER BY id
     </select>
 
     <!-- Count all active students -->

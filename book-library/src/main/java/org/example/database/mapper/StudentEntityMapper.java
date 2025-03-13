@@ -8,9 +8,11 @@ public interface StudentEntityMapper {
     StudentEntity findById(Long id);
     StudentEntity findByEmail(String email);
     List<StudentEntity> findAll(Long size, Long offset);
+    List<StudentEntity> findAllNotPaged();
     Long count();
     void insert(StudentEntity studentEntity);
     void update(StudentEntity studentEntity);
     void delete(Long id);
     List<StudentEntity> findAllByIdIn(List<Long> ids);
+
 }

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
 import { Student } from '../../model/student.model';
 import { StudentsService } from '../../services/students.service';
 import { StudentDetailModalComponent } from './student-detail-modal/student-detail-modal.component';
@@ -8,14 +8,10 @@ import { StudentHistoryModalComponent } from './student-history-modal/student-hi
 import { StudentEditModalComponent } from './student-edit-modal/student-edit-modal.component';
 import { StudentAddModalComponent } from './student-add-modal/student-add-modal.component';
 
-interface onInit {
-}
-
 @Component({
   selector: 'app-students',
   imports: [
     NgForOf,
-    NgClass,
     StudentDetailModalComponent,
     NgIf,
     NgxPaginationModule,
@@ -27,7 +23,7 @@ interface onInit {
   standalone: true,
   styleUrl: './students.component.css'
 })
-export class StudentsComponent implements onInit {
+export class StudentsComponent implements OnInit {
 
   selectedStudent: Student | null = null;
   showDetailsModal = false;

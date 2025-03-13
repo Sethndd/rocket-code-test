@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.database.entity.BookStatus;
 import org.example.database.entity.InventoryEntity;
 import org.example.service.InventoryService;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,13 @@ public class InventoryController {
             @PathVariable Long id
     ) {
         return inventoryService.findById(id);
+    }
+
+    @GetMapping("/book/{bookId}")
+    public BookStatus findByBookId(
+            @PathVariable Long bookId
+    ) {
+        return inventoryService.findByBookId(bookId);
     }
 
     @GetMapping
