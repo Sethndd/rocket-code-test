@@ -1,0 +1,53 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 card text-center">
+      <div class="card-header">
+        <h3>Gestión de libros</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Publicador</th>
+            <th>Año de publicación</th>
+            <th>Cantidad</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+            *ngFor="let book of books | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems, id: 'maintable'}">
+            <td>{{ book.title || ''}}</td>
+            <td>{{ book.author || '' }}</td>
+            <td>{{ book.publisher || '' }}</td>
+            <td>{{ book.publicationYear || '' }}</td>
+            <td>{{ book.quantity || '' }}</td>
+            <td>
+              <button class="btn btn-info" (click)="openEditModal(book)">Editar</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="row ms-1">
+          <button class="btn btn-info col-3" (click)="openAddModal()">Agregar libro</button>
+          <div class="col-4"></div>
+          <pagination-controls id="maintable" (pageChange)="changePage($event)" class="col-5"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- edit Modal -->
+  <app-edit-inventory-modal
+    [selectedBook]="selectedBook"
+    (onClose)="closeEditModal()"
+    *ngIf="showEditModal"
+  ></app-edit-inventory-modal>
+
+  <!-- add Modal -->
+  <app-add-inventory-modal
+    (onClose)="closeAddModal()"
+    *ngIf="showAddModal"
+  ></app-add-inventory-modal>
+</div>

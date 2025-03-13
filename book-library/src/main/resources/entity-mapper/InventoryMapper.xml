@@ -14,6 +14,19 @@
         <result property="overdue" column="overdue"/>
     </resultMap>
 
+    <resultMap id="BookInventory" type="org.example.database.entity.BookWithInventory">
+        <id property="id" column="id"/>
+        <result property="bookId" column="book_id"/>
+        <result property="title" column="title"/>
+        <result property="author" column="author"/>
+        <result property="publisher" column="publisher"/>
+        <result property="publicationYear" column="publication_year"/>
+        <result property="active" column="active"/>
+        <result property="description" column="description"/>
+        <result property="quantity" column="quantity"/>
+    </resultMap>
+
+
     <!-- Get book status -->
     <select id="findBookStatus" resultMap="bookStatus">
         SELECT
@@ -32,23 +45,39 @@
         SELECT * FROM inventory WHERE id = #{id}
     </select>
 
+    <!-- Find an inventory item by book id -->
+    <select id="findByBookId" resultType="org.example.database.entity.InventoryEntity">
+        SELECT *, book_id as bookId FROM inventory WHERE book_id = #{id}
+    </select>
+
     <!-- Find all inventory items -->
-    <select id="findAll" resultType="org.example.database.entity.InventoryEntity">
-        SELECT * FROM inventory
+    <select id="findAll" resultMap="BookInventory">
+        SELECT
+            i.id,
+            b.id as book_id,
+            b.*,
+            i.quantity
+        FROM inventory i
+        JOIN books b ON b.id = i.book_id
+        ORDER BY id LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <!-- count inventory items -->
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM inventory
     </select>
 
     <!-- Insert a new inventory item -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO inventory (product_id, quantity, price)
-        VALUES (#{productId}, #{quantity}, #{price})
+        INSERT INTO inventory (book_id, quantity)
+        VALUES (#{bookId}, #{quantity})
     </insert>
 
     <!-- Update an existing inventory item -->
     <update id="update">
         UPDATE inventory SET
-            product_id = #{productId},
-            quantity = #{quantity},
-            price = #{price}
+            book_id = #{bookId},
+            quantity = #{quantity}
         WHERE id = #{id}
     </update>
 </mapper>

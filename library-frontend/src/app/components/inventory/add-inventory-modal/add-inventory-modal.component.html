@@ -1,0 +1,34 @@
+<div class="modal mt-5" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true"
+     [ngClass]="{'show': true}" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookModalLabel">Seleccionar Libro y Cantidad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="bookForm" (ngSubmit)="save()">
+          <!-- Dropdown to select book -->
+          <div class="mb-3">
+            <label for="book" class="form-label">Libro</label>
+            <select class="form-select" id="book" formControlName="bookId" required>
+              <option value="" disabled selected>Seleccione un libro</option>
+              <option *ngFor="let book of books" [value]="book.id">{{ book.title }}</option>
+            </select>
+          </div>
+
+          <!-- Input for quantity -->
+          <div class="mb-3">
+            <label for="bookQuantity" class="form-label">Cantidad</label>
+            <input type="number" class="form-control" id="bookQuantity" formControlName="quantity" required>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">Cerrar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="bookForm.invalid">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

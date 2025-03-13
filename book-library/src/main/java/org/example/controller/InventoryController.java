@@ -2,7 +2,9 @@ package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.database.entity.BookStatus;
+import org.example.database.entity.BookWithInventory;
 import org.example.database.entity.InventoryEntity;
+import org.example.database.entity.Page;
 import org.example.service.InventoryService;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,17 +31,24 @@ public class InventoryController {
     }
 
     @GetMapping
-    public List<InventoryEntity> findAll() {
-        return inventoryService.findAll();
+    public Page<BookWithInventory> findAll(
+            @RequestParam(defaultValue = "1") Long page,
+            @RequestParam(defaultValue = "5") Long size
+    ) {
+        return inventoryService.findAll(page, size);
     }
 
     @PostMapping
-    public void insert(InventoryEntity inventoryEntity) {
+    public void insert(
+            @RequestBody InventoryEntity inventoryEntity
+    ) {
         inventoryService.insert(inventoryEntity);
     }
 
     @PutMapping
-    public void update(InventoryEntity inventoryEntity) {
+    public void update(
+            @RequestBody InventoryEntity inventoryEntity
+    ) {
         inventoryService.update(inventoryEntity);
     }
 }

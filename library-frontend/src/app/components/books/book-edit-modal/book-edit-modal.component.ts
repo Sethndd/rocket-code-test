@@ -26,7 +26,7 @@ export class BookEditModalComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.bookForm = this.fb.group({
+    this.bookForm = this.fb.group({
       title: [this.selectedBook!.title, Validators.required],
       author: [this.selectedBook!.author, Validators.required],
       publisher: [this.selectedBook!.publisher, Validators.required],

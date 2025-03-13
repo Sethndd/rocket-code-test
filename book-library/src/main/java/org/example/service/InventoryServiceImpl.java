@@ -1,9 +1,7 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.database.entity.BookStatus;
-import org.example.database.entity.InventoryEntity;
-import org.example.database.entity.LoansToBook;
+import org.example.database.entity.*;
 import org.example.database.mapper.InventoryEntityMapper;
 import org.example.database.mapper.LoanEntityMapper;
 import org.springframework.stereotype.Service;
@@ -22,8 +20,11 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public List<InventoryEntity> findAll() {
-        return inventoryEntityMapper.findAll();
+    public Page<BookWithInventory> findAll(Long page, Long size) {
+        Long offset = size * (page - 1);
+        List<BookWithInventory> entities = inventoryEntityMapper.findAll(size, offset);
+        Long total = inventoryEntityMapper.count();
+        return new Page<>(entities, page, size, total);
     }
 
     @Override
@@ -33,7 +34,12 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public void update(InventoryEntity inventoryEntity) {
-        inventoryEntityMapper.update(inventoryEntity);
+        InventoryEntity entity = inventoryEntityMapper.findByBookId(inventoryEntity.getBookId());
+        if(entity == null)
+            throw new IllegalArgumentException("No such book in inventory");
+
+        entity.setQuantity(inventoryEntity.getQuantity());
+        inventoryEntityMapper.update(entity);
     }
 
     @Override
