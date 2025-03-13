@@ -3,9 +3,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BooksService } from '../../services/books.service';
-import { Book } from '../../entities/book.model';
+import { Book } from '../../model/book.model';
 import { BookHistoryModalComponent } from './book-history-modal/book-history-modal.component';
 import { BookDetailsModalComponent } from './book-details-modal/book-details-modal.component';
+import { BookEditModalComponent } from './book-edit-modal/book-edit-modal.component';
+import { BookAddModalComponent } from './book-add-modal/book-add-modal.component';
 
 @Component({
   selector: 'app-books',
@@ -14,6 +16,8 @@ import { BookDetailsModalComponent } from './book-details-modal/book-details-mod
     CommonModule,
     BookHistoryModalComponent,
     BookDetailsModalComponent,
+    BookEditModalComponent,
+    BookAddModalComponent,
   ],
   templateUrl: './books.component.html',
   standalone: true,
@@ -23,6 +27,8 @@ export class BooksComponent implements OnInit {
   selectedBook: Book | null = null;
   showDetailsModal = false;
   showHistoryModal = false;
+  showEditModal = false;
+  showAddModal = false;
 
   books: Book[] = [];
   currentPage: number;
@@ -63,6 +69,26 @@ export class BooksComponent implements OnInit {
   closeHistoryModal() {
     this.selectedBook = null;
     this.showHistoryModal = false;
+  }
+
+  openEditModal(book: Book) {
+    this.selectedBook = book;
+    this.showEditModal = true;
+  }
+
+  closeEditModal() {
+    this.selectedBook = null;
+    this.showEditModal = false;
+    this.loadBooks()
+  }
+
+  openAddModal(){
+    this.showAddModal = true
+  }
+
+  closeAddModal(){
+    this.showAddModal = false;
+    this.loadBooks()
   }
 
   loadBooks() {

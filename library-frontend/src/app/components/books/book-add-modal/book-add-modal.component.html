@@ -1,0 +1,55 @@
+<div class="modal mt-5" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true"
+     [ngClass]="{'show': true}" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookModalLabel">Edit Book</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="closeAddModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="bookForm">
+          <div class="mb-3">
+            <label for="bookTitle" class="form-label"><strong>Titulo:</strong></label>
+            <input type="text" id="bookTitle" class="form-control" formControlName="title">
+            <small class="text-danger" *ngIf="bookForm.get('title')?.invalid && bookForm.get('title')?.touched">
+              El título del libro es obligatorio.
+            </small>
+          </div>
+          <div class="mb-3">
+            <label for="bookAuthor" class="form-label"><strong>Autor:</strong></label>
+            <input type="text" id="bookAuthor" class="form-control" formControlName="author">
+            <small class="text-danger" *ngIf="bookForm.get('author')?.invalid && bookForm.get('author')?.touched">
+              El autor del libro es obligatorio.
+            </small>
+          </div>
+          <div class="mb-3">
+            <label for="bookPublisher" class="form-label"><strong>Publicador:</strong></label>
+            <input type="text" id="bookPublisher" class="form-control" formControlName="publisher">
+            <small class="text-danger" *ngIf="bookForm.get('publisher')?.invalid && bookForm.get('publisher')?.touched">
+              El publicador del libro es obligatorio.
+            </small>
+          </div>
+          <div class="mb-3">
+            <label for="bookYear" class="form-label"><strong>Año de publicación:</strong></label>
+            <input type="number" id="bookYear" class="form-control" formControlName="publicationYear" [max]="currentYear">
+            <small class="text-danger" *ngIf="bookForm.get('publicationYear')?.invalid && bookForm.get('publicationYear')?.touched">
+              El año de publicación del libro es obligatorio.
+            </small>
+          </div>
+          <div class="mb-3">
+            <label for="bookDescription" class="form-label"><strong>Descripción:</strong></label>
+            <textarea id="bookDescription" class="form-control" formControlName="description"></textarea>
+            <small class="text-danger" *ngIf="bookForm.get('description')?.invalid && bookForm.get('description')?.touched">
+              La descripción del libro es obligatoria.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeAddModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" [disabled]="bookForm.invalid" (click)="saveChanges()">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>

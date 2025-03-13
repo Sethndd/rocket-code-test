@@ -29,12 +29,16 @@ public class StudentController {
     }
 
     @PostMapping
-    public void insert(StudentEntity studentEntity) {
+    public void insert(
+            @RequestBody StudentEntity studentEntity
+    ) {
         student.insert(studentEntity);
     }
 
     @PutMapping
-    public void update(StudentEntity studentEntity) {
+    public void update(
+            @RequestBody StudentEntity studentEntity
+    ) {
         student.update(studentEntity);
     }
 

@@ -12,8 +12,6 @@
             <th>Autor</th>
             <th>Publicador</th>
             <th>Año de publicación</th>
-            <th></th>
-            <th></th>
           </tr>
           </thead>
           <tbody>
@@ -24,7 +22,10 @@
             <td>{{ book.publisher || '' }}</td>
             <td>{{ book.publicationYear || '' }}</td>
             <td>
-              <button class="btn btn-info" (click)="openDetailsModal(book)">Details</button>
+              <button class="btn btn-info" (click)="openDetailsModal(book)">Detalles</button>
+            </td>
+            <td>
+              <button class="btn btn-info" (click)="openEditModal(book)">Editar</button>
             </td>
             <td>
               <button class="btn btn-info" (click)="openHistoryModal(book)">Historial</button>
@@ -32,7 +33,11 @@
           </tr>
           </tbody>
         </table>
-        <pagination-controls id="maintable" (pageChange)="changePage($event)"></pagination-controls>
+        <div class="row ms-1">
+          <button class="btn btn-info col-3" (click)="openAddModal()">Agregar libro</button>
+          <div class="col-4"></div>
+          <pagination-controls id="maintable" (pageChange)="changePage($event)" class="col-5"></pagination-controls>
+        </div>
       </div>
     </div>
   </div>
@@ -50,4 +55,17 @@
     (onClose)="closeHistoryModal()"
     *ngIf="showHistoryModal"
   ></app-book-history-modal>
+
+  <!-- edit Modal -->
+  <app-book-edit-modal
+    [selectedBook]="selectedBook"
+    (onClose)="closeEditModal()"
+    *ngIf="showEditModal"
+  ></app-book-edit-modal>
+
+  <!-- add Modal -->
+  <app-book-add-modal
+    (onClose)="closeAddModal()"
+    *ngIf="showAddModal"
+  ></app-book-add-modal>
 </div>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Book } from '../../../entities/book.model';
+import { Book } from '../../../model/book.model';
 import { BooksService } from '../../../services/books.service';
-import { BookHistory } from '../../../entities/book-history.model';
+import { BookHistory } from '../../../model/book-history.model';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DatePipe, NgClass, NgForOf } from '@angular/common';
 

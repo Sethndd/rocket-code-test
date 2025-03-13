@@ -26,8 +26,8 @@
 
     <!-- Insert a new book -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO books (title, author, publisher, publication_year)
-        VALUES (#{title}, #{author}, #{publisher}, #{publicationYear})
+        INSERT INTO books (title, author, publisher, publication_year, description)
+        VALUES (#{title}, #{author}, #{publisher}, #{publicationYear}, #{description})
     </insert>
 
     <select id="count" resultType="long">
@@ -39,8 +39,9 @@
         UPDATE books SET
             title = #{title},
             publication_year = #{publicationYear},
+            description = #{description},
             author = #{author},
-            publisher = #{publisher},
+            publisher = #{publisher}
         WHERE id = #{id}
     </update>
 

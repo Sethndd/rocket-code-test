@@ -8,8 +8,6 @@ import org.example.service.BookService;
 import org.example.service.LoanService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController()
 @RequestMapping("/books")
 @RequiredArgsConstructor
@@ -33,12 +31,16 @@ public class BookController {
     }
 
     @PostMapping
-    public void insert(BookEntity bookEntity) {
+    public void insert(
+            @RequestBody BookEntity bookEntity
+    ) {
         bookService.insert(bookEntity);
     }
 
     @PutMapping
-    public void update(BookEntity bookEntity) {
+    public void update(
+            @RequestBody BookEntity bookEntity
+    ) {
         bookService.update(bookEntity);
     }
 

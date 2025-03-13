@@ -26,11 +26,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void insert(BookEntity bookEntity) {
+        System.out.println("bookEntity = " + bookEntity);
         bookEntityMapper.insert(bookEntity);
     }
 
     @Override
     public void update(BookEntity bookEntity) {
+        System.out.println("bookEntity = " + bookEntity);
         bookEntityMapper.update(bookEntity);
     }
 
