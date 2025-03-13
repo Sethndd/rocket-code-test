@@ -1,16 +1,19 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../entities/book.model';
-import { BookHistory } from '../../entities/book-history.model';
+import { BookHistoryModalComponent } from './book-history-modal/book-history-modal.component';
+import { BookDetailsModalComponent } from './book-details-modal/book-details-modal.component';
 
 @Component({
   selector: 'app-books',
   imports: [
     NgxPaginationModule,
     CommonModule,
+    BookHistoryModalComponent,
+    BookDetailsModalComponent,
   ],
   templateUrl: './books.component.html',
   standalone: true,
@@ -21,11 +24,6 @@ export class BooksComponent implements OnInit {
   showDetailsModal = false;
   showHistoryModal = false;
 
-  bookHistory: BookHistory[] = [];
-  currentHistoryPage: number;
-  historyItemsPerPage: number;
-  totalHistoryItems: number;
-
   books: Book[] = [];
   currentPage: number;
   itemsPerPage: number;
@@ -35,10 +33,6 @@ export class BooksComponent implements OnInit {
     this.currentPage = 1;
     this.itemsPerPage = 5;
     this.totalItems = 0;
-
-    this.currentHistoryPage = 1;
-    this.historyItemsPerPage = 5;
-    this.totalHistoryItems = 0;
   }
 
   ngOnInit() {
@@ -50,10 +44,6 @@ export class BooksComponent implements OnInit {
     this.loadBooks();
   }
 
-  changeHistoryPage(page: number) {
-    this.currentHistoryPage = page;
-    setTimeout(() => this.loadBookHistory(this.selectedBook!.id), 0);
-  }
 
   openDetailsModal(book: Book) {
     this.selectedBook = book;
@@ -66,8 +56,6 @@ export class BooksComponent implements OnInit {
   }
 
   openHistoryModal(book: Book) {
-    this.bookHistory = [];
-    setTimeout(() => this.loadBookHistory(book.id), 0);
     this.selectedBook = book;
     this.showHistoryModal = true;
   }
@@ -89,17 +77,4 @@ export class BooksComponent implements OnInit {
       },
     });
   }
-
-  loadBookHistory(id: number) {
-    this.booksService.getHistory(id).subscribe({
-      next: (data) => {
-        this.bookHistory = data.content;
-        this.totalHistoryItems = data.totalElements;
-      },
-      error: (error) => {
-        console.error('Error loading book history:', error);
-      },
-    });
-  }
-
 }

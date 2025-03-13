@@ -38,68 +38,16 @@
   </div>
 
   <!-- details Modal -->
-  <div class="modal mt-5 " id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true"
-       [ngClass]="{'show': showDetailsModal}" style="display: block;" *ngIf="showDetailsModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="bookModalLabel">{{ selectedBook?.title }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                  (click)="closeDetailsModal()"></button>
-        </div>
-        <div class="modal-body">
-          <p><strong>Autor:</strong> {{ selectedBook?.author }}</p>
-          <p><strong>Publicador:</strong> {{ selectedBook?.publisher }}</p>
-          <p><strong>Año de publicación </strong> {{ selectedBook?.publicationYear }}</p>
-          <p><strong>Descripción:</strong> {{ selectedBook?.description }}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeDetailsModal()">Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-book-details-model
+    [selectedBook]="selectedBook"
+    (onClose)="closeDetailsModal()"
+    *ngIf="showDetailsModal"
+  ></app-book-details-model>
 
   <!-- history Modal -->
-  <div class="modal mt-5" id="historyModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true"
-       [ngClass]="{'show': showHistoryModal}" style="display: block;" *ngIf="showHistoryModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="bookhistoryModalLabel">{{ selectedBook?.title  || '' }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                  (click)="closeHistoryModal()"></button>
-        </div>
-        <div class="modal-body">
-          <table class="table table-sm table-striped table-bordered">
-            <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Fecha de prestamo</th>
-              <th>Fecha de devolución</th>
-              <th>Fecha de retorno</th>
-              <th>Estado</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr
-              *ngFor="let history of bookHistory | paginate: { itemsPerPage: historyItemsPerPage, currentPage: currentHistoryPage, totalItems: historyItemsPerPage, id: 'innertable'}">
-              <td>{{ history.studentName  || '' }}</td>
-              <td>{{ (history.loanDate | date:'dd/MM/yyyy')  || ''}}</td>
-              <td>{{ (history.loanDate | date:'dd/MM/yyyy')  || ''}}</td>
-              <td>{{ (history.loanDate | date:'dd/MM/yyyy')  || ''}}</td>
-              <td> {{ history.status  || ''}}</td>
-            </tr>
-            </tbody>
-          </table>
-          <pagination-controls id="innertable" (pageChange)="changeHistoryPage($event)"></pagination-controls>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeHistoryModal()">Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-book-history-modal
+    [selectedBook]="selectedBook"
+    (onClose)="closeHistoryModal()"
+    *ngIf="showHistoryModal"
+  ></app-book-history-modal>
 </div>

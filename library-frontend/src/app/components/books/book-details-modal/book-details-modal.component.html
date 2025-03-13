@@ -1,0 +1,22 @@
+  <div class="modal mt-5 " id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true"
+       [ngClass]="{'show': true}" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bookModalLabel">{{ selectedBook?.title }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                  (click)="closeDetailsModal()"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Autor:</strong> {{ selectedBook?.author }}</p>
+          <p><strong>Publicador:</strong> {{ selectedBook?.publisher }}</p>
+          <p><strong>Año de publicación </strong> {{ selectedBook?.publicationYear }}</p>
+          <p><strong>Descripción:</strong> {{ selectedBook?.description }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeDetailsModal()">Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
